@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/custome-style.css">
+    <link rel="stylesheet" href="css/circle.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body id="body">
+
+    <div class="loading_content" id="loading_content">
+        <div class="ag-title">
+            <p>WELCOME TO</p>
+            <img src="image/Virtual space Logo.png">
+        </div>
+        <div class="ag-logo">
+            <p>EXPERIENCE BY</p>
+            <img src="image/AG loading.png" width="250px">
+        </div>
+        <div class="loading">
+            <div class="progress"></div>
+        </div>
+
+        <div class="footer">
+            <p>By continuing to use this website, you agree to the use of cookies which allow us to measure user behaviour on our site</p>
+        </div>
+    </div>
+
+    <div class="gameContainer" id="gameContainer" style="height: 100vh;"></div>
+
+    <div id="popup-confirmation">
+        <div id="box">
+            <p>Thankyou! <br>Enjoy the content.<br> You will redirect to a new tab.</p>
+            <!-- <button id="btnYes">GOT IT!</button> -->
+        </div>
+    </div>
+
+    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
+    <script src="js/circle-progress.js"></script>
+    <script>
+        document.getElementById("body").style.margin = 0;
+        var circleProgress = new CircleProgress('.progress');
+        var loadingContent = document.getElementById("loading_content");
+        var numb = document.getElementById("loading_visual");
+        var percentage = document.getElementById("percentage");
+        var gameMode = document.getElementById("gameContainer");
+
+        circleProgress.max = 100;
+        circleProgress.textFormat = 'percent';
+
+        loadingContent.style.display = "block";
+        gameMode.style.display = "none";
+
+        var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%", {
+            onProgress: UnityProgress
+        });
+
+        function UnityProgress(gameInstance, progress) {
+            if (!gameInstance.Module) {
+                return;
+            }
+            var progress_raw = progress * 100;
+            var progress_int = Number((progress_raw).toFixed(0));
+            circleProgress.value = progress_int;
+
+            if (progress === 1 && !gameInstance.removeTimeout) {
+                gameInstance.removeTimeout = setTimeout(function() {
+                    loadingContent.style.display = "none";
+                    gameMode.style.display = "block";
+                }, 1000);
+            }
+        }
+
+
+        function OpenURL(url) {
+            var newURL = url;
+            console.log("Receive URL: " + newURL);
+            gameMode.style.position = "absolute";
+            var popUP = document.getElementById("popup-confirmation");
+            popUP.style.visibility = "visible";
+
+            var box = document.getElementById("box");
+            var button = document.createElement("BUTTON");
+            button.appendChild(document.createTextNode('GOT IT!'));
+            box.appendChild(button);
+
+            button.addEventListener("click", () => {
+                popUP.style.visibility = "hidden";
+                window.open(newURL, "_blank");
+                button.remove();
+            });
+        }
+
+        function DriftActivation() {
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-NKVLN4V');
+        }
+    </script>
+</body>
+
+</html>
