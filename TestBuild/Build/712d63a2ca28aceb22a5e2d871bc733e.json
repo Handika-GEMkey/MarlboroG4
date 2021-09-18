@@ -1,0 +1,17 @@
+{
+"companyName": "AntiGravity",
+"productName": "Malboro Racing Challenge",
+"productVersion": "1.0",
+"dataUrl": "33906c00e4ad862c895d444dd6b19ac2.unityweb",
+"wasmCodeUrl": "0e30f2ab19683232c0e2eb10b517baf2.unityweb",
+"wasmFrameworkUrl": "06018fc8fd19c89cbb9d87767855752d.unityweb",
+"wasmSymbolsUrl": "26489936b8e73ed972113ec9b2470cec.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.28f1"
+}
